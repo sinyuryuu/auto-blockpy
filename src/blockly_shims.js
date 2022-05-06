@@ -1,56 +1,43 @@
-
-
 /**
  * Initialise the database of variable names.
  * * 初始化變量名數據庫。
  * //@param {!Blockly.Workspace} workspace Workspace to generate code from. 工作區以生成代碼
  */
 
-
-
-
 Blockly.Python.init = function (workspace) {
-    /**
-     * Empty loops or conditionals are not allowed in Python.
-     */
-     /**
-     * Python 中不允許使用空循環或條件語句。
-     */
+  /**
+   * Empty loops or conditionals are not allowed in Python.
+   */
+  /**
+   * Python 中不允許使用空循環或條件語句。
+   */
 
-    Blockly.Python.PASS = this.INDENT + 'pass\n';
-    // Create a dictionary of definitions to be printed before the code.
-    // 創建要在代碼之前列印的定義字典。
+  Blockly.Python.PASS = this.INDENT + "pass\n";
+  // Create a dictionary of definitions to be printed before the code.
+  // 創建要在代碼之前列印的定義字典。
 
-    Blockly.Python.FALSE = 'False';
+  Blockly.Python.FALSE = "False";
 
-  
+  // 建立
 
- 
+  Blockly.Python.definitions_ = Object.create(null);
+  // Create a dictionary mapping desired function names in definitions_
+  // to actual function names (to avoid collisions with user functions).
+  Blockly.Python.functionNames_ = Object.create(null);
+  // Keep track of datasets that are already imported
+  Blockly.Python.imported_ = Object.create(null);
 
-    // 建立
+  if (!Blockly.Python.nameDB_) {
+    Blockly.Python.nameDB_ = new Blockly.Names(Blockly.Python.RESERVED_WORDS_);
+  } else {
+    Blockly.Python.nameDB_.reset();
+  }
 
+  Blockly.Python.nameDB_.setVariableMap(workspace.getVariableMap());
 
-
-
-    Blockly.Python.definitions_ = Object.create(null);
-    // Create a dictionary mapping desired function names in definitions_
-    // to actual function names (to avoid collisions with user functions).
-    Blockly.Python.functionNames_ = Object.create(null);
-    // Keep track of datasets that are already imported
-    Blockly.Python.imported_ = Object.create(null);
-
-    if (!Blockly.Python.variableDB_) {
-        Blockly.Python.variableDB_ =
-            new Blockly.Names(Blockly.Python.RESERVED_WORDS_);
-    } else {
-        Blockly.Python.variableDB_.reset();
-    }
-
-    Blockly.Python.variableDB_.setVariableMap(workspace.getVariableMap());
-
-    var defvars = [];
-    // Add developer variables (not created or named by the user).
-    /*
+  var defvars = [];
+  // Add developer variables (not created or named by the user).
+  /*
     var devVarList = Blockly.Variables.allDeveloperVariables(workspace);
     for (var i = 0; i < devVarList.length; i++) {
         defvars.push(Blockly.Python.variableDB_.getName(devVarList[i],
@@ -66,7 +53,6 @@ Blockly.Python.init = function (workspace) {
 
     Blockly.Python.definitions_['variables'] = defvars.join('\n');
      */
-    
 };
 
 /**
@@ -75,40 +61,39 @@ Blockly.Python.init = function (workspace) {
  * @return {string} Completed code.
  */
 Blockly.Python.finish = function (code) {
-    // Convert the definitions dictionary into a list.
-    var imports = [];
-    var definitions = [];
-    for (let name in Blockly.Python.definitions_) {
-        let def = Blockly.Python.definitions_[name];
-        if (name in Blockly.Python.imported_) {
-            continue;
-        }
-        if (def.match(/^(from\s+\S+\s+)?import\s+\S+/)) {
-            imports.push(def);
-        } else {
-            definitions.push(def);
-        }
+  // Convert the definitions dictionary into a list.
+  var imports = [];
+  var definitions = [];
+  for (let name in Blockly.Python.definitions_) {
+    let def = Blockly.Python.definitions_[name];
+    if (name in Blockly.Python.imported_) {
+      continue;
     }
-    // Clean up temporary data.
-    delete Blockly.Python.definitions_;
-    delete Blockly.Python.functionNames_;
-    Blockly.Python.variableDB_.reset();
-    // acbart: Don't actually inject initializations - we don't need 'em.
-    if (imports.length) {
-        return imports.join('\n') +"\n\n"+ code;
+    if (def.match(/^(from\s+\S+\s+)?import\s+\S+/)) {
+      imports.push(def);
     } else {
-        return code;
+      definitions.push(def);
     }
+  }
+  // Clean up temporary data.
+  delete Blockly.Python.definitions_;
+  delete Blockly.Python.functionNames_;
+  Blockly.Python.nameDB_.reset();
+  // acbart: Don't actually inject initializations - we don't need 'em.
+  if (imports.length) {
+    return imports.join("\n") + "\n\n" + code;
+  } else {
+    return code;
+  }
 };
 
-Blockly.Python.INDENT = '    ';
+Blockly.Python.INDENT = "    ";
 
-Blockly.Python.RESERVED_WORDS_ = (
-    "False,None,True,and,as,assert,break,class," +
-    "continue,def,del,elif,else,except,finally,for," +
-    "from,global,if,import,in,is,lambda,nonlocal," +
-    "not,or,pass,raise,return,try,while,with,yield"
-);
+Blockly.Python.RESERVED_WORDS_ =
+  "False,None,True,and,as,assert,break,class," +
+  "continue,def,del,elif,else,except,finally,for," +
+  "from,global,if,import,in,is,lambda,nonlocal," +
+  "not,or,pass,raise,return,try,while,with,yield";
 
 /**
  * Naked values are top-level blocks with outputs that aren't plugged into
@@ -117,10 +102,9 @@ Blockly.Python.RESERVED_WORDS_ = (
  * @return {string} Legal line of code.
  */
 Blockly.Python.scrubNakedValue = function (line) {
-    // acbart: Remove extra new line
-    return line;
+  // acbart: Remove extra new line
+  return line;
 };
-
 
 /**
  * Construct the blocks required by the flyout for the variable category.
@@ -128,60 +112,74 @@ Blockly.Python.scrubNakedValue = function (line) {
  * @return {!Array.<!Element>} Array of XML block elements.
  */
 Blockly.Variables.flyoutCategoryBlocks = function (workspace) {
-    var variableModelList = workspace.getVariablesOfType('');
+  var variableModelList = workspace.getVariablesOfType("");
 
-    var xmlList = [];
-    if (variableModelList.length > 0) {
-        // New variables are added to the end of the variableModelList.
-        var mostRecentVariableFieldXmlString =
-                variableModelList[variableModelList.length - 1];
-        if (!Blockly.Variables._HIDE_GETTERS_SETTERS && Blockly.Blocks['ast_Assign']) {
-            var gap = Blockly.Blocks['ast_AugAssign'] ? 8 : 24;
-            var blockText = '<xml>' +
-                '<block type="ast_Assign" gap="' + gap + '">' +
-                mostRecentVariableFieldXmlString +
-                '</block>' +
-                '</xml>';
-            var block = Blockly.Xml.textToDom(blockText).firstChild;
-            xmlList.push(block);
-        }
-        if (!Blockly.Variables._HIDE_GETTERS_SETTERS && Blockly.Blocks['ast_AugAssign']) {
-            var gap = Blockly.Blocks['ast_Name'] ? 20 : 8;
-            var blockText = '<xml>' +
-                '<block type="ast_AugAssign" gap="' + gap + '">' +
-                mostRecentVariableFieldXmlString +
-                '<value name="VALUE">' +
-                '<shadow type="ast_Num">' +
-                '<field name="NUM">1</field>' +
-                '</shadow>' +
-                '</value>' +
-                '<mutation options="false" simple="true"></mutation>' +
-                '</block>' +
-                '</xml>';
-            var block = Blockly.Xml.textToDom(blockText).firstChild;
-            xmlList.push(block);
-        }
-
-        if (Blockly.Blocks['ast_Name']) {
-            variableModelList.sort(Blockly.VariableModel.compareByName);
-            for (let i = 0, variable; variable = variableModelList[i]; i++) {
-                if (!Blockly.Variables._HIDE_GETTERS_SETTERS) {
-                    let block = Blockly.utils.xml.createElement('block');
-                    block.setAttribute('type', 'ast_Name');
-                    block.setAttribute('gap', 8);
-                    block.appendChild(Blockly.Variables.generateVariableFieldDom(variable));
-                    xmlList.push(block);
-                } else {
-                    block = Blockly.utils.xml.createElement('label');
-                    block.setAttribute('text', variable.name);
-                    block.setAttribute('web-class', 'blockmirror-toolbox-variable');
-                    //block.setAttribute('gap', 8);
-                    xmlList.push(block);
-                }
-            }
-        }
+  var xmlList = [];
+  if (variableModelList.length > 0) {
+    // New variables are added to the end of the variableModelList.
+    var mostRecentVariableFieldXmlString =
+      variableModelList[variableModelList.length - 1];
+    if (
+      !Blockly.Variables._HIDE_GETTERS_SETTERS &&
+      Blockly.Blocks["ast_Assign"]
+    ) {
+      var gap = Blockly.Blocks["ast_AugAssign"] ? 8 : 24;
+      var blockText =
+        "<xml>" +
+        '<block type="ast_Assign" gap="' +
+        gap +
+        '">' +
+        mostRecentVariableFieldXmlString +
+        "</block>" +
+        "</xml>";
+      var block = Blockly.Xml.textToDom(blockText).firstChild;
+      xmlList.push(block);
     }
-    return xmlList;
+    if (
+      !Blockly.Variables._HIDE_GETTERS_SETTERS &&
+      Blockly.Blocks["ast_AugAssign"]
+    ) {
+      var gap = Blockly.Blocks["ast_Name"] ? 20 : 8;
+      var blockText =
+        "<xml>" +
+        '<block type="ast_AugAssign" gap="' +
+        gap +
+        '">' +
+        mostRecentVariableFieldXmlString +
+        '<value name="VALUE">' +
+        '<shadow type="ast_Num">' +
+        '<field name="NUM">1</field>' +
+        "</shadow>" +
+        "</value>" +
+        '<mutation options="false" simple="true"></mutation>' +
+        "</block>" +
+        "</xml>";
+      var block = Blockly.Xml.textToDom(blockText).firstChild;
+      xmlList.push(block);
+    }
+
+    if (Blockly.Blocks["ast_Name"]) {
+      variableModelList.sort(Blockly.VariableModel.compareByName);
+      for (let i = 0, variable; (variable = variableModelList[i]); i++) {
+        if (!Blockly.Variables._HIDE_GETTERS_SETTERS) {
+          let block = Blockly.utils.xml.createElement("block");
+          block.setAttribute("type", "ast_Name");
+          block.setAttribute("gap", 8);
+          block.appendChild(
+            Blockly.Variables.generateVariableFieldDom(variable)
+          );
+          xmlList.push(block);
+        } else {
+          block = Blockly.utils.xml.createElement("label");
+          block.setAttribute("text", variable.name);
+          block.setAttribute("web-class", "blockmirror-toolbox-variable");
+          //block.setAttribute('gap', 8);
+          xmlList.push(block);
+        }
+      }
+    }
+  }
+  return xmlList;
 };
 
 //******************************************************************************
@@ -195,7 +193,7 @@ Blockly.Variables.flyoutCategoryBlocks = function (workspace) {
  *     and 1 if greater.
  * @package
  */
-Blockly.VariableModel.compareByName = function(var1, var2) {
+Blockly.VariableModel.compareByName = function (var1, var2) {
   var name1 = var1.name;
   var name2 = var2.name;
   if (name1 < name2) {
@@ -207,19 +205,20 @@ Blockly.VariableModel.compareByName = function(var1, var2) {
   }
 };
 
-Blockly.Names.prototype.getName = function(name, type) {
+Blockly.Names.prototype.getName = function (name, type) {
   if (type == Blockly.VARIABLE_CATEGORY_NAME) {
     var varName = this.getNameForUserVariable_(name);
     if (varName) {
       name = varName;
     }
   }
-  var normalized = name + '_' + type;
+  var normalized = name + "_" + type;
 
-  var isVarType = type == Blockly.VARIABLE_CATEGORY_NAME ||
-      type == Blockly.Names.DEVELOPER_VARIABLE_TYPE;
+  var isVarType =
+    type == Blockly.VARIABLE_CATEGORY_NAME ||
+    type == Blockly.Names.DEVELOPER_VARIABLE_TYPE;
 
-  var prefix = isVarType ? this.variablePrefix_ : '';
+  var prefix = isVarType ? this.variablePrefix_ : "";
   if (normalized in this.db_) {
     return prefix + this.db_[normalized];
   }
@@ -228,11 +227,11 @@ Blockly.Names.prototype.getName = function(name, type) {
   return safeName;
 };
 
-Blockly.Names.equals = function(name1, name2) {
+Blockly.Names.equals = function (name1, name2) {
   return name1 == name2;
 };
 
-Blockly.Variables.nameUsedWithOtherType_ = function(name, type, workspace) {
+Blockly.Variables.nameUsedWithOtherType_ = function (name, type, workspace) {
   var allVariables = workspace.getVariableMap().getAllVariables();
 
   for (var i = 0, variable; (variable = allVariables[i]); i++) {
@@ -243,7 +242,7 @@ Blockly.Variables.nameUsedWithOtherType_ = function(name, type, workspace) {
   return null;
 };
 
-Blockly.Variables.nameUsedWithAnyType_ = function(name, workspace) {
+Blockly.Variables.nameUsedWithAnyType_ = function (name, workspace) {
   var allVariables = workspace.getVariableMap().getAllVariables();
 
   for (var i = 0, variable; (variable = allVariables[i]); i++) {
@@ -253,9 +252,3 @@ Blockly.Variables.nameUsedWithAnyType_ = function(name, workspace) {
   }
   return null;
 };
-
-
-
-
-
-

@@ -261,8 +261,12 @@ BlockMirrorBlockEditor.prototype.setMode = function (mode) {
  * block workspace. Might be prevented if an update event was already
  * percolating.
  */
-BlockMirrorBlockEditor.prototype.getCode = function () {
-  return Blockly.Python.workspaceToCode(this.workspace);
+BlockMirrorBlockEditor.prototype.getCode = 
+function () {
+  var code = Blockly.Python.workspaceToCode(this.workspace)
+ 
+
+  return  code;
 };
 
 /**

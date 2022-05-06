@@ -74,8 +74,10 @@ Blockly.Extensions.registerMixin('contextMenu_variableSetterGetter_forBlockMirro
 
 Blockly.Python['ast_Name'] = function (block) {
     // Variable getter.
-    var code = Blockly.Python.variableDB_.getName(block.getFieldValue('VAR'),
-        Blockly.Variables.NAME_TYPE);
+    var code = Blockly.Python.nameDB_.getName(
+      block.getFieldValue("VAR"),
+      Blockly.Variables.NAME_TYPE
+    );
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
