@@ -178,6 +178,7 @@
           onclick="editor.setMode('text');"
           >僅程式碼</label
         >
+    
       </div>
 
       <p>
@@ -185,6 +186,9 @@
 
         <button type="button" class="btn btn-primary" id="go">
           取得程式碼
+        </button>
+        <button type="button" class="btn btn-primary" id="changetheme">
+          暗黑模式
         </button>
         <button type="button" class="btn btn-primary" id="run">輸出範例</button>
         <button type="button" class="btn btn-primary" id="reset">重置</button>
@@ -235,6 +239,12 @@
       ></div>
 
       <script>
+        function changeTheme() {
+          var theme = document.getElementById("themeChanger");
+          Blockly.getMainWorkspace().setTheme(Blockly.Themes.Dark);
+        }
+      </script>
+      <script>
         const configuration = {
           container: document.getElementById("blockmirror-editor"),
           blocklyMediaPath: "media/",
@@ -261,6 +271,10 @@
 
         $("#reset").click(function () {
           editor.blockEditor.setCode("");
+        });
+
+        $("#changetheme").click(function () {
+          Blockly.getMainWorkspace().setTheme(Blockly.Themes.Dark);
         });
 
         function download(text, filename) {
