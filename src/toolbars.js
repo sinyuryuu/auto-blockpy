@@ -121,8 +121,8 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
 
     //這裡可以使用原生的GOOGLLE BLOCKS XML
     //https://developers.google.com/blockly/guides/create-custom-blocks/xml-custom-blocks
-    
-    '<toolboxlabel name="自訂工具箱" colour="darkslategrey"></toolboxlabel>',
+    //colour="#A3321A" css-label="customLabel"  顏色、粗體
+    '<toolboxlabel name="自訂工具箱" colour="#A3321A" css-label="customLabel"></toolboxlabel>',
     '<category name="Loops" categorystyle="loop_category">',
     '<block type="controls_if"></block>', //原生的if
     '<block type="controls_whileUntil"></block>',
