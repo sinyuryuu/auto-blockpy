@@ -120,16 +120,18 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
     // TODO: What should live in here?
 
     //這裡可以使用原生的GOOGLLE BLOCKS XML
+    //css-icon="fa fa-spinner fa-spin fa-3x fa-fw" 新增圖片icon
+    
     //https://developers.google.com/blockly/guides/create-custom-blocks/xml-custom-blocks
     //colour="#A3321A" css-label="customLabel"  顏色、粗體
     '<toolboxlabel name="自訂工具箱" colour="#A3321A" css-label="customLabel"></toolboxlabel>',
-    '<category name="Loops" categorystyle="loop_category">',
+    '<category css-icon="fa fa-spinner fa-spin fa-2x fa-fw" name="Loops" categorystyle="loop_category">',
     '<block type="controls_if"></block>', //原生的if
     '<block type="controls_whileUntil"></block>',
     '<block type="ast_If"></block>', //單獨使用blpckpy的if
     "</category>",
     TOOLBOX_CATEGORY.TEST,
-    '<category name="Logic" categorystyle="logic_category">',
+    '<category css-icon="fa fa-code fa-2x fa-fw" name="Logic" categorystyle="logic_category">',
     "</category>",
   ],
   //******************************************************
