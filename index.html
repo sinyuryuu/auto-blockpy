@@ -25,15 +25,30 @@
 
     <!-- Blockly -->
 
-    <script src="lib/blockly/blockly_compressed.js" type="text/javascript"></script>
-    <script src="lib/blockly/blocks_compressed.js" type="text/javascript"></script>
+    <script
+      src="lib/blockly/blockly_compressed.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="lib/blockly/blocks_compressed.js"
+      type="text/javascript"
+    ></script>
     <script src="lib/blockly/zh-hant.js" type="text/javascript"></script>
-    <script src="lib/blockly/python_compressed.js" type="text/javascript"></script>
-    <script src="lib/blockly/custom_category.js" type="text/javascript"></script>
+    <script
+      src="lib/blockly/python_compressed.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="lib/blockly/custom_category.js"
+      type="text/javascript"
+    ></script>
     <script src="lib/blockly/toolbox_label_es6.js"></script>
     <!-- <link rel="stylesheet" href="lib/blockly/s3-dark.css"> -->
     <link rel="stylesheet" href="lib/blockly/toolbox_style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
     <style>
       html,
@@ -66,8 +81,6 @@
     <!-- <link rel="stylesheet" href="lib/codemirror/fullscreen.css"> -->
     <script src="lib/codemirror/codemirror.js" type="text/javascript"></script>
     <script src="lib/codemirror/python.js" type="text/javascript"></script>
-    
-
 
     <!-- dev mode -->
 
@@ -182,7 +195,7 @@
       </div>
 
       <p>
-        <br/>
+        <br />
 
         <button type="button" class="btn btn-primary" id="go">
           取得程式碼
@@ -348,10 +361,15 @@
           var reader = new FileReader();
           reader.onload = function (e) {
             var contents = e.target.result;
-            editor.setCode(contents);
+            /* 去除contents 空白段落 */
+            contents = contents.replace(/\n\s*\n/g, "\n");
+            
+            editor.blockEditor.setCode(contents);
+            
           };
           reader.readAsText(file);
         });
+
       </script>
     </div>
   </body>
