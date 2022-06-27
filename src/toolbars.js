@@ -1,8 +1,9 @@
-let ZERO_BLOCK = BlockMirrorTextToBlocks.create_block("ast_Num", null, {
+/* let ZERO_BLOCK = BlockMirrorTextToBlocks.create_block("ast_Num", null, {
   NUM: 0,
-});
+}); */
 
-BlockMirrorBlockEditor.EXTRA_TOOLS = {};
+/* BlockMirrorBlockEditor.EXTRA_TOOLS = {}; */
+
 
 const TOOLBOX_CATEGORY = {};
 
@@ -10,9 +11,25 @@ TOOLBOX_CATEGORY.VARIABLES = {
   name: "Variables",
   colour: "VARIABLES",
   custom: "VARIABLE",
+  
 };
 
+
+/* https://developers.google.com/blockly/guides/configure/web/toolbox#json_10
+
+如何自訂圖片？
+
+
+
+*/
+
+/* 工具列自訂圖示 */
+
+
+
 TOOLBOX_CATEGORY.TEST = {
+  
+  CSS:"fa fa-code fa-2x fa-fw",
   name: "Decisions",
   colour: "LOGIC",
   blocks: [
@@ -26,6 +43,12 @@ TOOLBOX_CATEGORY.TEST = {
     "if ___: pass",
   ],
 };
+
+console.log(TOOLBOX_CATEGORY.TEST);
+
+
+
+
 
 TOOLBOX_CATEGORY.DECISIONS = {
   name: "Decisions",
@@ -93,8 +116,14 @@ TOOLBOX_CATEGORY.VALUES = {
   name: "Values",
   colour: "TEXT",
   blocks: ['""', "0", "True"],
+  
 };
 TOOLBOX_CATEGORY.SEP = "<sep></sep>";
+
+
+
+
+
 
 TOOLBOX_CATEGORY.CONVERSIONS = {
   name: "Conversion",
@@ -125,12 +154,15 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
     //https://developers.google.com/blockly/guides/create-custom-blocks/xml-custom-blocks
     //colour="#A3321A" css-label="customLabel"  顏色、粗體
     '<toolboxlabel name="自訂工具箱" colour="#A3321A" css-label="customLabel"></toolboxlabel>',
+    TOOLBOX_CATEGORY.SEP,
     '<category css-icon="fa fa-spinner fa-spin fa-2x fa-fw" name="Loops" categorystyle="loop_category">',
     '<block type="controls_if"></block>', //原生的if
     '<block type="controls_whileUntil"></block>',
     '<block type="ast_If"></block>', //單獨使用blpckpy的if
     "</category>",
+
     TOOLBOX_CATEGORY.TEST,
+
     '<category css-icon="fa fa-code fa-2x fa-fw" name="Logic" categorystyle="logic_category">',
     "</category>",
   ],
@@ -375,7 +407,7 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
         ]}*/,
   ],
   //******************************************************
-  ct2: [
+  ct3: [
     {
       name: "Memory",
       colour: "VARIABLES",
@@ -419,6 +451,23 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
       blocks: ["if ___: pass", "if ___: pass\nelse: pass"],
     },
     { name: "Iteration", colour: "CONTROL", blocks: ["for ___ in ___: pass"] },
+    "</category>",
+  ],
+
+  ct2: [
+    {
+      name: "Memory",
+      colour: "VARIABLES",
+      custom: "VARIABLE",
+      hideGettersSetters: true,
+    },
+
+    '<category name="Expressions" expanded="true">',
+    {
+      name: "Decision",
+      colour: "CONTROL",
+      blocks: ["if ___: pass", "if ___: pass\nelse: pass"],
+    },
     "</category>",
   ],
 };

@@ -37,6 +37,8 @@
 
 } */
 
+
+
 /* Makes our label white. */
 .blocklyTreeLabel {
   color: white;
@@ -67,6 +69,14 @@
   height: initial;
 }
 
+/* 自訂工具箱css設定 */
 .customLabel {
   font-weight: bold;
+  padding: 10px;  
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px 1px rgb(182, 81, 81); /* 陰影 */
+  text-align:center;
+  background-color:#C7FF91;
+ 
+
 }

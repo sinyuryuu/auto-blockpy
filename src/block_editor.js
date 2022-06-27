@@ -136,7 +136,9 @@ BlockMirrorBlockEditor.prototype.toolboxPythonToBlocks = function (
         return category;
       }
       let colour = BlockMirrorTextToBlocks.COLOR[category.colour];
-      let header = `<category name="${category.name}" colour="${colour}"`;
+      //工具箱頭部產生
+
+      let header = `<category css-icon ="${category.CSS}" name="${category.name}" colour="${colour}"`;
       if (category.custom) {
         header += ` custom="${category.custom}">`;
       } else {
@@ -174,8 +176,12 @@ BlockMirrorBlockEditor.prototype.makeToolbox = function () {
   for (let name in BlockMirrorBlockEditor.EXTRA_TOOLS) {
     toolbox += BlockMirrorBlockEditor.EXTRA_TOOLS[name];
   }
+  console.log(toolbox);
   return '<xml id="toolbox" style="display:none">' + toolbox + "</xml>";
+  
+
 };
+
 
 BlockMirrorBlockEditor.prototype.remakeToolbox = function () {
   this.workspace.updateToolbox(this.makeToolbox());
