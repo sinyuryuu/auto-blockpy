@@ -21,3 +21,4 @@ BlockMirrorTextToBlocks.prototype['ast_YieldFrom'] = function (node, parent) {
         "VALUE": this.convert(value, node)
     });
 };
+

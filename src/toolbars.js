@@ -121,7 +121,7 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
 
     //這裡可以使用原生的GOOGLLE BLOCKS XML
     //css-icon="fa fa-spinner fa-spin fa-3x fa-fw" 新增圖片icon
-    
+
     //https://developers.google.com/blockly/guides/create-custom-blocks/xml-custom-blocks
     //colour="#A3321A" css-label="customLabel"  顏色、粗體
     '<toolboxlabel name="自訂工具箱" colour="#A3321A" css-label="customLabel"></toolboxlabel>',
@@ -221,7 +221,6 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
         "___ == ___",
         "___ < ___",
         "___ in ___",
-        "else",
         "___ and ___",
         "not ___",
         "not ___",
