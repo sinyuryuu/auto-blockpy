@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <title>Block測試</title>
 
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
@@ -49,26 +53,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <link rel="stylesheet" href="/style.css" />
 
-    <style>
-      html,
-      body {
-        height: 100%;
-      }
-
-      body {
-        background-color: rgb(255, 255, 255);
-        font-family: sans-serif;
-        font-size: 20px;
-      }
-
-      h1 {
-        font-weight: normal;
-        font-size: 200%;
-        font-family: sans-serif;
-        /* margin: 100px; */
-      }
-    </style>
 
     <!-- Skulpt -->
     <script src="lib/skulpt/skulpt.js" type="text/javascript"></script>
@@ -144,7 +130,7 @@
   
   <body>
     <div class="container-fluid">
-      <p class="fs-1" style="text-align: center">積木方塊測試--python</p>
+      <p>Python積木方塊</p>
       <!-- 文字置中 -->
 
       <div
@@ -180,7 +166,6 @@
           onclick="editor.setMode('split');"
           >同時顯示</label
         >
-
         <input
           type="radio"
           class="btn-check"
@@ -196,30 +181,16 @@
         >
       </div>
 
-      <p>
-        <br/>
-
-        <button type="button" class="btn btn-primary" id="go">
-          取得程式碼
-        </button>
-        <button type="button" class="btn btn-primary" id="changetheme">
-          暗黑模式
-        </button>
-        <button type="button" class="btn btn-primary" id="run">輸出範例</button>
-        <button type="button" class="btn btn-primary" id="reset">重置</button>
-        <button type="button" class="download btn btn-primary">匯出</button>
-        <input type="text" class="filename" value="file.py" />
-      </p>
-
+      
       <!-- 從本機上傳檔案 -->
 
+     
       <form
         id="upload-form"
-        action="upload.php"
         method="post"
-        enctype="multipart/form-data"
       >
-        <div style="padding: 50px 50px 10px" class="input-group">
+
+       <div class="input-group">
           <input
             type="file"
             class="form-control"
@@ -231,27 +202,39 @@
           <button class="btn btn-outline-secondary" type="button" id="upload">
             讀取檔案
           </button>
-        </div>
       </form>
-
-      <br />
-      <button class="btn btn-primary" type="button" onclick="runit()">
-        執行程式
-      </button>
-      <p></p>
-      <div>
-        <h3>輸出結果</h3>
-
-        <h1 id="output"></h1>
-        <!-- 可以輸出圖表 -->
-        <div id="mycanvas"></div>
-        <!-- <div id="root"></div> -->
+      </div>
       </div>
 
-      <div
-        style="width: 100%; height: 100%; margin-left: auto; margin-right: auto"
-        id="blockmirror-editor"
-      ></div>
+      <!--  <button class="btn btn-primary" type="button" onclick="runit()">
+        執行程式
+      </button> -->
+
+      
+ <!--<div>
+        <h3>輸出結果</h3>
+        <h1 id="output"></h1>
+        <!-- 可以輸出圖表 -->
+       <!--  <div id="mycanvas"></div> -->
+        <!-- <div id="root"></div> -->
+    <!--</div> --> 
+
+
+    <div class="controltool">
+        <button type="button" class="btn btn-primary" id="go">
+          取得程式碼
+        </button>
+        <button type="button" class="btn btn-primary" id="changetheme">
+          暗黑模式
+        </button>
+        <button type="button" class="btn btn-primary" id="run">輸出範例</button>
+        <button type="button" class="btn btn-primary" id="reset">重置</button>
+        <button type="button" class="btn btn-primary" id="download">匯出</button>
+        
+      </div>
+
+
+      <div id="blockmirror-editor"></div>
 
       <script>
         function changeTheme() {
@@ -285,30 +268,101 @@
         });
 
         $("#reset").click(function () {
-          editor.blockEditor.setCode("");
+         const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                
+              })
+
+              swalWithBootstrapButtons.fire({
+                title: '確定嗎?',
+                text: "您將無法還原此內容!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '清除',
+                cancelButtonText: '取消',
+                reverseButtons: true
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  swalWithBootstrapButtons.fire(
+                    '已清除!',
+                    '您的程式碼已全部清除',
+                    'success'
+                  )
+                  editor.blockEditor.setCode("");
+                } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                  swalWithBootstrapButtons.fire(
+                    '取消',
+                    '您的程式碼已保留 :)',
+                    'info'
+                  )
+                }
+              })
         });
 
         $("#changetheme").click(function () {
           Blockly.getMainWorkspace().setTheme(Blockly.Themes.Dark);
         });
 
-        function download(text, filename) {
-          var code = editor.getCode();
-          if (typeof filename === "undefined") {
-            filename = false;
-          }
-          var pom = document.createElement("a");
-          pom.setAttribute(
-            "href",
-            "data:text/plain;charset=utf-8," + encodeURIComponent(code)
-          );
-          if (filename) {
-            pom.setAttribute("download", filename);
-          }
-          pom.click();
-        }
 
-        //ipput() 跳出警示視窗輸入參數
+
+
+        /* 在警示視窗輸入名稱並下載副檔名為.py */
+        $("#download").click(function () {
+          var code = editor.getCode();
+          swal.fire({
+              showCancelButton:true,
+              title: "請輸入檔案名稱",
+              inputAttributes: {
+                autocapitalize: "off"
+              },
+              confirmButtonText: "確定",
+              cancelButtonText: "取消",
+              
+              html:`<input class="input-group-text" id="input1" type="text">`,
+              
+
+              preConfirm:
+              function()
+              {
+                filename= $('#input1').val();
+                console.log(filename); // use user input value freely 
+                
+                if (filename === "") {
+                  Swal.fire(
+                    '尚未輸入檔名',
+                    '請再輸入一次檔案名稱',
+                    'question'
+                )
+                }else{
+
+                  var pom = document.createElement("a");
+                  pom.setAttribute(
+                    "href",
+                    "data:text/plain;charset=utf-8," + encodeURIComponent(code)
+                  );
+                  if (filename) {
+                    pom.setAttribute("download", filename + ".py");
+
+                  }
+                  pom.click();
+
+                  
+                  /* 清空filename */
+                  filename = "";
+                }
+                
+            }
+         }) // end of swal;
+ 
+        });
+
+
 
         function outf(text) {
           var mypre = document.getElementById("output");
@@ -322,6 +376,13 @@
             throw "File not found: '" + x + "'";
           return Sk.builtinFiles["files"][x];
         }
+
+
+         
+
+
+
+
 
         // Here's everything you need to run a python program in skulpt
         // grab the code from your textarea
@@ -348,13 +409,7 @@
           );
         }
 
-        $(document).ready(function () {
-          $(".download").click(function (e) {
-            var filename = $(".filename").val();
-            var fileguts = $(".fileguts").val();
-            download(fileguts, filename);
-          });
-        });
+   
 
         /* 讀取檔案 */
 
@@ -365,7 +420,6 @@
             var contents = e.target.result;
             /* 去除contents 空白段落 */
             contents = contents.replace(/\n\s*\n/g, "\n");
-
             editor.blockEditor.setCode(contents);
           };
           reader.readAsText(file);
