@@ -38,6 +38,7 @@ function BlockMirrorBlockEditor(blockMirror) {
       snap: true,
     },
     renderer: "zelos",
+    
     //theme: 'Dark',
     //theme: 'DarkTheme',
 
@@ -176,12 +177,9 @@ BlockMirrorBlockEditor.prototype.makeToolbox = function () {
   for (let name in BlockMirrorBlockEditor.EXTRA_TOOLS) {
     toolbox += BlockMirrorBlockEditor.EXTRA_TOOLS[name];
   }
-  console.log(toolbox);
+  // console.log(toolbox);
   return '<xml id="toolbox" style="display:none">' + toolbox + "</xml>";
-  
-
 };
-
 
 BlockMirrorBlockEditor.prototype.remakeToolbox = function () {
   this.workspace.updateToolbox(this.makeToolbox());
@@ -267,12 +265,10 @@ BlockMirrorBlockEditor.prototype.setMode = function (mode) {
  * block workspace. Might be prevented if an update event was already
  * percolating.
  */
-BlockMirrorBlockEditor.prototype.getCode = 
-function () {
-  var code = Blockly.Python.workspaceToCode(this.workspace)
- 
+BlockMirrorBlockEditor.prototype.getCode = function () {
+  var code = Blockly.Python.workspaceToCode(this.workspace);
 
-  return  code;
+  return code;
 };
 
 /**
@@ -451,3 +447,5 @@ BlockMirrorBlockEditor.prototype.highlightLines = function (lines, style) {
         block
     });*/
 };
+
+

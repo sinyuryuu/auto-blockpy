@@ -126,6 +126,7 @@
     <script src="src/ast/ast_With.js" type="text/javascript"></script>
     <script src="src/ast/ast_Comment.js" type="text/javascript"></script>
     <script src="src/ast/ast_Raw.js" type="text/javascript"></script>
+   
   </head>
   
   <body>
@@ -149,7 +150,6 @@
           id="block"
           class="btn btn-outline-primary"
           for="btnradio1"
-          onclick="editor.setMode('block');"
           >積木</label
         >
 
@@ -236,8 +236,16 @@
         <button type="button" class="btn btn-primary" id="reset">重置</button>
         <button type="button" class="btn btn-primary" id="download">匯出</button>
         <button type="button" class="btn btn-primary" id="change-tool">修改工具列</button>
+        <button type="button" class="btn btn-primary" id="change-bar">替換工具箱</button>
+        <button type="button" class="btn btn-primary" id="output-xml">匯出xml</button>
+        <button type="button" class="btn btn-primary" id="input-xml">匯入xml</button>
         
       </div>
+      
+      <div>
+      <textarea class="form-control" name="mexml" id="myOutputTextarea" cols="30" rows="10"></textarea>
+      </div>
+
 
 
       <div id="blockmirror-editor"></div>

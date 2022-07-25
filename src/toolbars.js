@@ -4,16 +4,13 @@
 
 /* BlockMirrorBlockEditor.EXTRA_TOOLS = {}; */
 
-
 const TOOLBOX_CATEGORY = {};
 
 TOOLBOX_CATEGORY.VARIABLES = {
   name: "Variables",
   colour: "VARIABLES",
   custom: "VARIABLE",
-  
 };
-
 
 /* https://developers.google.com/blockly/guides/configure/web/toolbox#json_10
 
@@ -25,11 +22,8 @@ TOOLBOX_CATEGORY.VARIABLES = {
 
 /* 工具列自訂圖示 */
 
-
-
 TOOLBOX_CATEGORY.TEST = {
-  
-  CSS:"fa fa-code fa-2x fa-fw",
+  CSS: "fa fa-code fa-2x fa-fw",
   name: "Decisions",
   colour: "LOGIC",
   blocks: [
@@ -44,11 +38,7 @@ TOOLBOX_CATEGORY.TEST = {
   ],
 };
 
-console.log(TOOLBOX_CATEGORY.TEST);
-
-
-
-
+// console.log(TOOLBOX_CATEGORY.TEST);
 
 TOOLBOX_CATEGORY.DECISIONS = {
   name: "Decisions",
@@ -116,14 +106,8 @@ TOOLBOX_CATEGORY.VALUES = {
   name: "Values",
   colour: "TEXT",
   blocks: ['""', "0", "True"],
-  
 };
 TOOLBOX_CATEGORY.SEP = "<sep></sep>";
-
-
-
-
-
 
 TOOLBOX_CATEGORY.CONVERSIONS = {
   name: "Conversion",
