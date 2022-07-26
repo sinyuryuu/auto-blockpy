@@ -115,6 +115,7 @@ BlockMirrorTextToBlocks.prototype.recursiveMeasure = function (
 ) {
   if (node === undefined) {
     return;
+    
   }
   var myNext = nextBlockLine;
   if ("orelse" in node && node.orelse.length > 0) {

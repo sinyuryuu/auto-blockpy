@@ -28,7 +28,7 @@ $(document).ready(function () {
 
   const blockmirror = document.getElementById("blockmirror-editor");
   // const toolBarList = ["full", "minimal", "ct2", "normal", "empty"];
-  const toolBarList = ["full", "minimal"]; //顯示不同工具箱
+  const toolBarList = ["minimal", "full"]; //顯示不同工具箱
   let toolBarMode = 0;
   let editor = null;
   const initBM = (toolBox) => {

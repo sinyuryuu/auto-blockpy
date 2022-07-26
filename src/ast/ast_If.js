@@ -12,6 +12,7 @@ Blockly.Blocks["ast_If"] = {
     this.setNextStatement(true, null);
     this.setColour(BlockMirrorTextToBlocks.COLOR.LOGIC);
     this.updateShape_();
+
   },
   // TODO: Not mutable currently
   updateShape_: function () {
@@ -20,6 +21,7 @@ Blockly.Blocks["ast_If"] = {
       if (!this.getInput("ELIF" + i)) {
         this.appendValueInput("ELIFTEST" + i).appendField("elif");
         this.appendStatementInput("ELIFBODY" + i).setCheck(null);
+
       }
     }
     // Remove deleted inputs.
@@ -39,11 +41,11 @@ Blockly.Blocks["ast_If"] = {
 
     for (i = 0; i < this.elifs_; i++) {
       if (this.orelse_) {
-        this.moveInputBefore("ELIFTEST" + i, "ORELSETEST");
-        this.moveInputBefore("ELIFBODY" + i, "ORELSETEST");
+        /* this.moveInputBefore("ELIFTEST" + i, "ORELSETEST");
+        this.moveInputBefore("ELIFBODY" + i, "ORELSETEST"); */
       } else if (i + 1 < this.elifs_) {
-        this.moveInputBefore("ELIFTEST" + i, "ELIFTEST" + (i + 1));
-        this.moveInputBefore("ELIFBODY" + i, "ELIFBODY" + (i + 1));
+       /*  this.moveInputBefore("ELIFTEST" + i, "ELIFTEST" + (i + 1));
+        this.moveInputBefore("ELIFBODY" + i, "ELIFBODY" + (i + 1)); */
       }
     }
   },
@@ -123,6 +125,8 @@ BlockMirrorTextToBlocks.prototype["ast_If"] = function (node, parent) {
   let body = node.body;
   let orelse = node.orelse;
 
+  
+
   let hasOrelse = false;
   let elifCount = 0;
 
@@ -132,6 +136,7 @@ BlockMirrorTextToBlocks.prototype["ast_If"] = function (node, parent) {
   while (orelse !== undefined && orelse.length > 0) {
     if (orelse.length === 1) {
       if (orelse[0]._astname === "If") {
+        console.log(test, body, orelse);
         // This is an ELIF
         this.heights.shift();
         values["ELIFTEST" + elifCount] = this.convert(orelse[0].test, node);
@@ -153,6 +158,7 @@ BlockMirrorTextToBlocks.prototype["ast_If"] = function (node, parent) {
 
   return BlockMirrorTextToBlocks.create_block(
     "ast_If",
+
     node.lineno,
     {},
     values,

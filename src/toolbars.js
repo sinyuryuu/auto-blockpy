@@ -16,27 +16,68 @@ TOOLBOX_CATEGORY.VARIABLES = {
 
 如何自訂圖片？
 
-
-
 */
+
+
+TOOLBOX_CATEGORY.custom = {
+  CSS: "fa fa-code fa-2x fa-fw",
+  name: "變數",
+  colour: "VARIABLES",
+  custom: "VARIABLE",
+};
+
+
+TOOLBOX_CATEGORY.custominput = {
+  CSS: "fa fa-code fa-2x fa-fw",
+  name: "輸入/輸出",
+  colour: "TEXT",
+  blocks: ["input(___)", "input()", "print(___)", '""'],
+};
+
+
+TOOLBOX_CATEGORY.customtype = {
+  CSS: "fa fa-code fa-2x fa-fw",
+  name: "型態",
+  colour: "TEXT",
+  blocks: ["eval(___)", "int(___)", "str(___)", "float(___)"],
+};
+
+
+TOOLBOX_CATEGORY.custommath = {
+  CSS: "fa fa-code fa-2x fa-fw",
+  name: "數學",
+  colour: "MATH",
+  blocks: [
+    '0',
+    "___ + ___",
+    "___-___",
+    "___ * ___",
+    "___ / ___",
+    "___ % ___",
+    "___ ** ___",
+    "___ // ___",
+    
+  ],
+};
+
+
 
 /* 工具列自訂圖示 */
 
 TOOLBOX_CATEGORY.TEST = {
+
   CSS: "fa fa-code fa-2x fa-fw",
   name: "Decisions",
   colour: "LOGIC",
   blocks: [
     "if ___: pass",
+    "if ___:pass\nelif ___:pass",
     "if ___: pass\nelse: pass",
-    "___ < ___",
-    "___ and ___",
-    "___ and ___",
-    "break",
-    "not ___",
-    "if ___: pass",
   ],
-};
+  
+
+},
+
 
 // console.log(TOOLBOX_CATEGORY.TEST);
 
@@ -53,7 +94,7 @@ TOOLBOX_CATEGORY.DECISIONS = {
     "___ and ___",
     "break",
     "not ___",
-  ],
+  ]
 };
 
 TOOLBOX_CATEGORY.CALCULATIONS = {
@@ -137,14 +178,13 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
 
     //https://developers.google.com/blockly/guides/create-custom-blocks/xml-custom-blocks
     //colour="#A3321A" css-label="customLabel"  顏色、粗體
+
     '<toolboxlabel name="自訂工具箱" colour="#A3321A" css-label="customLabel"></toolboxlabel>',
     TOOLBOX_CATEGORY.SEP,
-    '<category css-icon="fa fa-spinner fa-spin fa-2x fa-fw" name="Loops" categorystyle="loop_category">',
-    '<block type="controls_if"></block>', //原生的if
-    '<block type="controls_whileUntil"></block>',
-    '<block type="ast_If"></block>', //單獨使用blpckpy的if
-    "</category>",
-
+    TOOLBOX_CATEGORY.custom,
+    TOOLBOX_CATEGORY.custominput,
+    TOOLBOX_CATEGORY.customtype,
+    TOOLBOX_CATEGORY.custommath,
     TOOLBOX_CATEGORY.TEST,
 
     '<category css-icon="fa fa-code fa-2x fa-fw" name="Logic" categorystyle="logic_category">',
