@@ -61,41 +61,59 @@ TOOLBOX_CATEGORY.custommath = {
 };
 
 
+TOOLBOX_CATEGORY.customiteration = {
+  CSS: "fa fa-code fa-2x fa-fw",
+  name: "疊代",
+  colour: "CONTROL",
+  blocks: [
+    "for ___ in range(___, ___, ___): pass",
+    "while ___: pass",
+    "range(___, ___, ___)",
+    "break",
+    "continue",
+    "pass",
+    "True",
+    "False",
+  ],
+};
+
+
 
 /* 工具列自訂圖示 */
 
-TOOLBOX_CATEGORY.TEST = {
-
+(TOOLBOX_CATEGORY.TEST = {
   CSS: "fa fa-code fa-2x fa-fw",
-  name: "Decisions",
+  name: "判斷",
   colour: "LOGIC",
   blocks: [
     "if ___: pass",
     "if ___:pass\nelif ___:pass",
     "if ___: pass\nelse: pass",
-  ],
-  
-
-},
-
-
-// console.log(TOOLBOX_CATEGORY.TEST);
-
-TOOLBOX_CATEGORY.DECISIONS = {
-  name: "Decisions",
-  colour: "LOGIC",
-  blocks: [
-    "if ___: pass",
-    "if ___: pass\nelse: pass",
+    "if ___: pass\nelif ___:pass\nelse: pass",
+    "___ == ___",
+    "___ != ___",
+    "___ > ___",
     "___ < ___",
-    "___ and ___",
-    "elif__:\n    pass",
-    "else__:\n    pass",
-    "___ and ___",
-    "break",
-    "not ___",
-  ]
-};
+
+  ],
+}),
+  // console.log(TOOLBOX_CATEGORY.TEST);
+
+  (TOOLBOX_CATEGORY.DECISIONS = {
+    name: "Decisions",
+    colour: "LOGIC",
+    blocks: [
+      "if ___: pass",
+      "if ___: pass\nelse: pass",
+      "___ < ___",
+      "___ and ___",
+      "elif__:\n    pass",
+      "else__:\n    pass",
+      "___ and ___",
+      "break",
+      "not ___",
+    ],
+  });
 
 TOOLBOX_CATEGORY.CALCULATIONS = {
   name: "Calculation",
@@ -185,9 +203,16 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
     TOOLBOX_CATEGORY.custominput,
     TOOLBOX_CATEGORY.customtype,
     TOOLBOX_CATEGORY.custommath,
+    TOOLBOX_CATEGORY.customiteration,
     TOOLBOX_CATEGORY.TEST,
 
     '<category css-icon="fa fa-code fa-2x fa-fw" name="Logic" categorystyle="logic_category">',
+    '<block type="controls_if"></block>', //原生的if
+    '<block type="controls_whileUntil"></block>',
+    '<block type="ast_If"></block>', //單獨使用blpckpy的if
+    '<block type="ast_Compare">',
+    '<field name="OP">Eq</field>',
+    '</block>',
     "</category>",
   ],
   //******************************************************
