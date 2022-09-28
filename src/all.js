@@ -38,7 +38,7 @@ $(document).ready(function () {
       blocklyMediaPath: "media/",
       skipSkulpt: false,
       toolbox: toolBox,
-      height: 800,
+      height: 500,
     });
   };
   initBM(toolBarList[toolBarMode]);
@@ -82,8 +82,13 @@ $(document).ready(function () {
 
   $("#go").click(function () {
     var code = editor.getCode();
-    // console.log(code);
-    alert(code);
+    console.log(code);
+    //alert(code);
+    if (code === "") {
+      Swal.fire("您的程式碼為空", "請輸入程式碼", "info");
+    } else {
+      Swal.fire("您的程式碼", code, "info");
+    }
   });
 
   $("#run").click(function () {
@@ -255,7 +260,6 @@ $(document).ready(function () {
    */
 
   $("#output-xml").click(function () {
-    
     var xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());
     var xml_text = Blockly.Xml.domToPrettyText(xml);
     console.log(xml_text);
