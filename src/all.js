@@ -1,4 +1,11 @@
 $(document).ready(function () {
+
+  
+  $("#input-xml" ).hide();
+  $("#output-xml" ).hide()
+  $("#change-tool").hide()
+  $("#change-bar").hide()
+
   function changeTheme() {
     var theme = document.getElementById("themeChanger");
     Blockly.getMainWorkspace().setTheme(Blockly.Themes.Dark);
@@ -148,7 +155,7 @@ $(document).ready(function () {
       confirmButtonText: "確定",
       cancelButtonText: "取消",
 
-      html: `<input class="input-group-text" id="input1" type="text">`,
+      html: `<input class="input-file-text" id="input1" type="text">`,
 
       preConfirm: function () {
         filename = $("#input1").val();
@@ -253,6 +260,7 @@ $(document).ready(function () {
     editor.setMode("text");
   });
 
+
   /* https://groups.google.com/g/blockly/c/IeSzg4DQ1TM
   
   techplex...@gmail.com
@@ -272,4 +280,16 @@ $(document).ready(function () {
     var xml = Blockly.Xml.textToDom(xml_text);
     Blockly.Xml.domToWorkspace(Blockly.getMainWorkspace(), xml);
   });
+
+  $("#debug").click(function () {
+
+    $("#input-xml" ).toggle(1500);
+    $("#output-xml" ).toggle(1500);
+    $("#change-tool").toggle(1500);
+    $("#change-bar").toggle(1500);
+  
+
+  });
+
+
 });

@@ -181,9 +181,11 @@
   ></script>
     <div class="content">
     <!-- 從本機上傳檔案 --> 
+
+
   
     <div class="funbtn">  
-      <button type="button" class="btn btn-primary" id="go">
+      <button type="button" class="btn btn-primary" name="mexml" id="go">
         <i class="fas fa-terminal fa-sm"></i>  取得程式碼
       </button>
       <button type="button" class="btn btn-primary" id="changetheme">
@@ -197,8 +199,8 @@
       <button type="button" class="btn btn-primary" id="change-bar"><i class="fas fa-undo-alt"></i>  替換工具箱</button>
       <button type="button" class="btn btn-primary" id="output-xml"><i class="fas fa-file-import"></i>  匯出xml</button>
       <button type="button" class="btn btn-primary" id="input-xml"><i class="fas fa-file-export"></i>  匯入xml</button>
-      <button type="button" class="btn btn-primary" id="debug"><i class="fas fa-file-export"></i> DEBUG</button>
-      
+      <button type="button" class="btn btn-primary" id="debug"><i class="las la-bug"></i> DEBUG</button>
+      <i class=""></i>
     </div>
     
    
@@ -208,13 +210,8 @@
       role="group"
       aria-label="Basic radio toggle button group"
     >
-      <input
-        type="radio"
-        class="btn-check"
-        name="btnradio"
-        id="btnradio1"
-        autocomplete="off"
-      />
+      <input type="radio" class="btn-check" name="btnradio id="btnradio1" autocomplete="off"/>
+     
       <label
         id="block"
         class="btn btn-outline-primary"
@@ -274,9 +271,13 @@
     <div id="blockmirror-editor"></div>
     <script src="src/all.js"></script>
 
+
+
+
+
     <div class="ansoutput">
       <label class="form-label" for="textAreaExample">輸出結果</label>
-      <textarea class="form-control" name="mexml" id="myOutputTextarea" cols="30" rows="10"></textarea>
+      <textarea href="#mexml" class="form-control" name="mexml" id="myOutputTextarea" cols="30" rows="10"></textarea>
     </div>
   </div>
 

@@ -154,9 +154,15 @@ body {
 }
 
 .funbtn > button {
-    background: red;
-    padding: 5px 5px 5px;
-    margin: 5px 5px 5px;
+  background: red;
+  font-size:15px !important;
+  line-height: 2;
+  cursor: pointer;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  text-indent: 3px;
+  padding: 10px 10px 10px;
+  margin: 5px 5px 5px;
 }
 
 
@@ -167,21 +173,28 @@ body {
     padding-top: 10px;
     padding-bottom: 5px;
     padding-left: 5px;
-    box-shadow: none !important;    
+    box-shadow: none !important;   
+    color: black !important;
 
 }
+
+
 
 
 .input-group {
     padding: 0px 10px;
+    
 
 }
+
+
+
 
 
 .ansoutput  {
     
     background: gray;
-    text-decoration: overline;
+    
     padding: 10px;
 }
 
@@ -196,6 +209,8 @@ body {
     padding: 10px;
 }
 
+
+
 .footer {
   margin-top: 30px;
   height: 120px;
@@ -207,3 +222,37 @@ body {
   flex-wrap: wrap;
 }
 
+.ms > input > label{
+     
+  background: #000 !important;
+  
+   
+ 
+ }
+
+
+#ms > input > label{
+     
+  background: #000 !important;
+  
+
+ }
+
+ 
+.ms  input  label{
+     
+  background: #000 !important;
+  
+
+ }
+
+
+ ms  input  label{
+     
+  background: #000 !important;
+  
+
+ }
+ 
+
+ 
