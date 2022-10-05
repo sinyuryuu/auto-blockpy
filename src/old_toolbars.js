@@ -20,7 +20,7 @@ TOOLBOX_CATEGORY.VARIABLES = {
 
 
 TOOLBOX_CATEGORY.custom = {
-  CSS: "fas fa-align-justify fa-2x fa-fw",
+  CSS: "fa fa-code fa-2x fa-fw",
   name: "變數",
   colour: "VARIABLES",
   custom: "VARIABLE",
@@ -28,7 +28,7 @@ TOOLBOX_CATEGORY.custom = {
 
 
 TOOLBOX_CATEGORY.custominput = {
-  CSS: "fas fa-arrow-alt-circle-right fa-2x fa-fw",
+  CSS: "fa fa-code fa-2x fa-fw",
   name: "輸入/輸出",
   colour: "TEXT",
   blocks: ["input(___)", "input()", "print(___)", '""'],
@@ -44,7 +44,7 @@ TOOLBOX_CATEGORY.customtype = {
 
 
 TOOLBOX_CATEGORY.custommath = {
-  CSS: "fas fa-plus-circle fa-2x fa-fw",
+  CSS: "fa fa-code fa-2x fa-fw",
   name: "數學",
   colour: "MATH",
   blocks: [
@@ -62,7 +62,7 @@ TOOLBOX_CATEGORY.custommath = {
 
 
 TOOLBOX_CATEGORY.customiteration = {
-  CSS: "fas fa-undo fa-2x fa-fw",
+  CSS: "fa fa-code fa-2x fa-fw",
   name: "疊代",
   colour: "CONTROL",
   blocks: [
@@ -82,7 +82,7 @@ TOOLBOX_CATEGORY.customiteration = {
 /* 工具列自訂圖示 */
 
 (TOOLBOX_CATEGORY.TEST = {
-  CSS: "las la-exclamation-circle la-3x green",
+  CSS: "fa fa-code fa-2x fa-fw",
   name: "判斷",
   colour: "LOGIC",
   blocks: [
