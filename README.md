@@ -14,7 +14,8 @@
 - 2022/09/29 修正 html、修改彈跳視窗樣式
 - 2022/10/05 new page
 - 2022/11/29 修正無法取得變數Bug
-
+- 2023/08/04 if功能新增
+- 
 # 測試網站
 
 https://sinyuryuu.github.io/auto-blockpy/
