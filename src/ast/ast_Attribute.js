@@ -25,7 +25,7 @@ BlockMirrorTextToBlocks.BLOCKS.push({
 
 Blockly.Python['ast_Attribute'] = function (block) {
     // Text value.
-    var value = Blockly.Python.variableDB_.getName(block.getFieldValue('VALUE'),
+    var value = Blockly.Python.nameDB_.getName(block.getFieldValue('VALUE'),
         Blockly.Variables.NAME_TYPE);
     var attr = block.getFieldValue('ATTR');
     let code = value + "." + attr;

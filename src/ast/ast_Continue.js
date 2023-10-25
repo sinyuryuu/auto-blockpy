@@ -5,6 +5,7 @@ BlockMirrorTextToBlocks.BLOCKS.push({
   previousStatement: null,
   nextStatement: null,
   colour: BlockMirrorTextToBlocks.COLOR.CONTROL,
+  
 });
 
 Blockly.Python["ast_Continue"] = function (block) {

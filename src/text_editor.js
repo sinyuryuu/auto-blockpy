@@ -83,6 +83,7 @@ function BlockMirrorTextEditor(blockMirror) {
                 }
             }
         }
+
     });
 
     this.codeMirror.on("change", (cm, change) => {
@@ -95,6 +96,9 @@ function BlockMirrorTextEditor(blockMirror) {
                 lastLine = Math.max(1 + change.to.line, change.text.length);
             }
             this.updateImages(cm, change.from.line, lastLine);
+
+
+            //console.log("Text content changed");
         }
     });
 
@@ -309,6 +313,9 @@ BlockMirrorTextEditor.prototype.setCode = function (code, quietly) {
 BlockMirrorTextEditor.prototype.getCode = function () {
     return this.codeMirror.getValue();
 };
+
+
+
 
 BlockMirrorTextEditor.prototype.changed = function (codeMirror, event) {
     if (!this.silentEvents_) {

@@ -105,7 +105,8 @@ Blockly.Python['ast_Import'] = function (block) {
         let name = block.getFieldValue('NAME' + i);
         elements[i] = name;
         if (!this.regulars_[i]) {
-            name = Blockly.Python.variableDB_.getName(block.getFieldValue('ASNAME' + i), Blockly.Variables.NAME_TYPE);
+			//是nameDB_ 不是 variableDB_
+            name = Blockly.Python.nameDB_.getName(block.getFieldValue('ASNAME' + i), Blockly.Variables.NAME_TYPE);
             elements[i] += " as " + name;
         }
         if (!from) {

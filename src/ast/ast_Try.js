@@ -99,7 +99,7 @@ Blockly.Python['ast_Try'] = function (block) {
             clause += " " + Blockly.Python.valueToCode(block, 'TYPE' + i,
                 Blockly.Python.ORDER_NONE) || Blockly.Python.blank;
             if (level === BlockMirrorTextToBlocks.HANDLERS_COMPLETE) {
-                clause += " as " + Blockly.Python.variableDB_.getName(block.getFieldValue('NAME' + i),
+                clause += " as " + Blockly.Python.nameDB_.getName(block.getFieldValue('NAME' + i),
                     Blockly.Variables.NAME_TYPE);
             }
         }

@@ -60,7 +60,7 @@ Blockly.Python['ast_Nonlocal'] = function (block) {
     // Create a list with any number of elements of any type.
     let elements = new Array(block.nameCount_);
     for (let i = 0; i < block.nameCount_; i++) {
-        elements[i] = Blockly.Python.variableDB_.getName(block.getFieldValue('NAME' + i), Blockly.Variables.NAME_TYPE);
+        elements[i] = Blockly.Python.nameDB_.getName(block.getFieldValue('NAME' + i), Blockly.Variables.NAME_TYPE);
     }
     return 'nonlocal ' + elements.join(', ') + "\n";
 };

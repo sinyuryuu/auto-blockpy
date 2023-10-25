@@ -90,11 +90,14 @@ BlockMirrorTextToBlocks.prototype.FUNCTION_SIGNATURES = {
   open: { returns: true, colour: BlockMirrorTextToBlocks.COLOR.FILE },
   ord: { returns: true, colour: BlockMirrorTextToBlocks.COLOR.TEXT },
   pow: { returns: true, colour: BlockMirrorTextToBlocks.COLOR.MATH },
+  //在哪裡實現的? 
   print: {
     returns: false,
     colour: BlockMirrorTextToBlocks.COLOR.FILE,
     simple: ["message"],
     full: ["*messages", "sep", "end", "file", "flush"],
+    
+
   },
   property: { returns: true, colour: BlockMirrorTextToBlocks.COLOR.OO },
   range: {

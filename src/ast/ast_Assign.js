@@ -94,9 +94,6 @@ Blockly.Python["ast_Assign"] = function (block) {
   return targets.join(" = ") + " = " + value + "\n";
 };
 
-
-
-
 BlockMirrorTextToBlocks.prototype["ast_Assign"] = function (node, parent) {
   let targets = node.targets;
   let value = node.value;

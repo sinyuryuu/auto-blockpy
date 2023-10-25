@@ -27,7 +27,7 @@ Blockly.Blocks['ast_If'] = {
   updateShape_: function () {
     let latestInput = "BODY";
     //else 只會有一個
-    k = 0;
+    var ko = 0;
     for (var i = 0; i < this.elifs_; i++) {
 
 
@@ -56,7 +56,7 @@ Blockly.Blocks['ast_If'] = {
     if (this.orelse_ && !this.getInput("ORELSETEST")) {
       
       //確認k = 0
-      if(k == 0){
+      if(ko == 0){
 
         
       console.log("我想要增加ORELSE");
@@ -65,7 +65,7 @@ Blockly.Blocks['ast_If'] = {
       this.appendStatementInput("ORELSEBODY")
         .setCheck(null)
         .appendField(Blockly.Msg.CONTROLS_IF_MSG_THEN); // 修改此處
-      k = 1;
+      ko = 1;
       }else{
         console.log("ORELSE已經存在");
       }
@@ -74,12 +74,12 @@ Blockly.Blocks['ast_If'] = {
         console.log("我想要移除ORELSE");
         this.removeInput("ORELSETEST");
         this.removeInput("ORELSEBODY");
-        k = 0;
+        ko = 0;
       }
 
 
 
-    if(k == 0){
+    if(ko == 0){
     for (i = 0; i < this.elifs_; i++) {
       if (this.orelse_) {
         this.moveInputBefore("ELIFTEST" + i, "ORELSETEST");

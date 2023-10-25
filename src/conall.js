@@ -1,28 +1,10 @@
-(function (window, document) {
-  "use strict";
-  //console.log(this, window, document); // {}, null, null
-  const win = (function () {
-    return this;
-  })();
-  //console.log(win); // undefined
-  setTimeout(function () {
-    //console.log(this); // Window
-  });
-}).call({}, null, null);
-
 $(document).ready(function () {
-  //check localstorage font-size
+   $("#detailed").hide();
 
-  if (
-    localStorage.getItem("fontsize") == null ||
-    localStorage.getItem("fontsize") == "100%"
-  ) {
-    localStorage.setItem("fontsize", "100%");
-  } else {
-    $("body").css("font-size", "125%");
-  }
 
-  $("#detailed").hide();
+
+
+
 
   const $navbarBurgers = $(".navbar-burger");
 
@@ -37,13 +19,9 @@ $(document).ready(function () {
     $target.toggleClass("is-active");
   });
 
-  var firstrun = true;
-
   //Timer
   function makeTimerRequest() {
     var qssid = $(".qssid").attr("name");
-
-    //console.log(firstrun);
 
     $.ajax({
       type: "Post",
@@ -53,6 +31,14 @@ $(document).ready(function () {
       dataType: "json",
       data: { para1: "strtime", para2: qssid },
       success: function (res) {
+        console.log(res);
+        //是否第一次執行?
+        var firstrun = true;
+
+        //設定模式 block split text
+
+        //editor.setMode("split");
+
         if (firstrun == true && res.exammod == "無限制") {
           if (res.mod == "blockly") {
             editor.setMode("block");
@@ -62,25 +48,33 @@ $(document).ready(function () {
             editor.setMode("text");
           }
         } else if (firstrun == true && res.exammod != "無限制") {
+          console.log(res.exammod); //積木 雙重 文字
           if (res.exammod == "積木") {
             editor.setMode("block");
-          } else if (res.exammod == "普通") {
+          } else if (res.exammod == "雙重") {
             editor.setMode("split");
           } else if (res.exammod == "文字") {
             editor.setMode("text");
           }
         }
 
-        if (res.code == 0) {
-          editor.setCode("");
-        } else if (res.code == 1 && firstrun == true) {
-          var usercode = res.res;
-          editor.setCode(usercode);
-        }
-
-        firstrun = false;
+        var firstrun = false;
 
         //沒答過題
+        if (res.code == 0) {
+          /* 設定預設Python程式碼 
+         是否以後能用xml檔案方式匯入?
+         (保留積木方塊的座標以及程式碼)
+      */
+          editor.setCode("");
+        } else {
+          //若有答題過清空作答區，設定作答區
+
+          var usercode = res.res;
+
+          //設定預設Python程式碼
+          editor.setCode(usercode);
+        }
       },
       error: function () {
         console.log("連線失敗");
@@ -117,6 +111,14 @@ $(document).ready(function () {
     var theme = document.getElementById("themeChanger");
     Blockly.getMainWorkspace().setTheme(Blockly.Themes.Dark);
   }
+
+  const fileInput = document.querySelector("#file-js-example input[type=file]");
+  fileInput.onchange = () => {
+    if (fileInput.files.length > 0) {
+      const fileName = document.querySelector("#file-js-example .file-name");
+      fileName.textContent = fileInput.files[0].name;
+    }
+  };
 
   /**
    * Define blocks from an array of JSON block definitions, as might be generated
@@ -193,7 +195,7 @@ $(document).ready(function () {
 
   $("#go").click(function () {
     var code = editor.getCode();
-    //console.log(code);
+    console.log(code);
     //alert(code);
     if (code === "") {
       Swal.fire("您的程式碼為空", "請輸入程式碼", "info");
@@ -207,10 +209,43 @@ $(document).ready(function () {
       contentType: "application/x-www-form-urlencoded",
       dataType: "json", // 類型
       success: function (res) {
-        //console.log(res);
+        console.log(res);
         //res to utf-8
 
-        Swal.fire("執行結果", res.msg, "info");
+        if (res.code == 0 && res.respone == "答案正確") {
+          re = res.msg;
+
+          //顯示在textarea
+          document.getElementById("Outcmd").value = re;
+          //document.getElementById("myOutputTextarea").value = re;
+
+          Swal.fire("您的結果", res.msg, "success");
+
+          //code ==3
+        } else if (res.code == 3 && res.respone == "答案錯誤") {
+          {
+            re = res.msg;
+
+            //顯示在textarea
+            document.getElementById("Outcmd").value = re;
+            //document.getElementById("myOutputTextarea").value = re;
+
+            Swal.fire("您的結果", res.respone, "error");
+          }
+          //code ==4
+        } else if (res.code == 4 && res.respone == "程式錯誤") {
+          {
+            re = res.msg;
+
+            //顯示在textarea
+            document.getElementById("Outcmd").value = re;
+            //document.getElementById("myOutputTextarea").value = re;
+
+            Swal.fire("您的結果", res.msg, "error");
+          }
+        } else {
+          Swal.fire("錯誤", res.msg, "error");
+        }
       },
       error: function () {
         alert("error");
@@ -226,7 +261,7 @@ $(document).ready(function () {
 
   $("#testgo").click(function () {
     var code = editor.getCode();
-    //console.log(code);
+    console.log(code);
     //alert(code);
     localStorage.setItem("code", editor.getCode());
 
@@ -236,9 +271,6 @@ $(document).ready(function () {
     var qssid = $(".qssid").attr("name");
     var cqssid = $("#qssid").attr("name");
     var CourseId = $(".CourseId").attr("name");
-    var clientId = connection.connectionId;
-
-    console.log(clientId);
 
     //console.log(qssid);
     //console.log(cqssid);
@@ -264,12 +296,11 @@ $(document).ready(function () {
         para3: qssid,
         para4: CourseId,
         para5: mode,
-        para6: clientId,
       },
       contentType: "application/x-www-form-urlencoded",
       dataType: "json", // 類型
       success: function (res) {
-        //console.log(res);
+        console.log(res);
         //res to utf-8
 
         if (res.code == 0 && res.respone == "答案正確") {
@@ -281,6 +312,10 @@ $(document).ready(function () {
           document.getElementById("Outcmd").value = re;
           //隱藏顯示div 顯示詳細結果
           $("#detailed").hide();
+
+
+
+       
 
           //清空＃code
           $("#code").text("");
@@ -306,7 +341,7 @@ $(document).ready(function () {
                       $("#con").html("");
                       $(".con").html("");
                       $(".con").append(result);
-                      //console.log(result);
+                      console.log(result);
                       resolve();
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -346,7 +381,7 @@ $(document).ready(function () {
 
             temp = temp.replace(/\n/g, " "); //去/n
 
-            //console.log(temp);
+            console.log(temp);
 
             //檢查是否為空值或是空字串
             if (
@@ -356,11 +391,12 @@ $(document).ready(function () {
               temp == ""
             ) {
               document.getElementById("Outcmd").value = "沒有輸出結果";
-
+             
               $("#code").text("");
               $("#code").text("沒有輸出結果");
 
               $("#detailed").hide();
+
 
               Swal.fire("您的結果", "沒有輸出結果", "info");
               makeTimerRequest();
@@ -375,7 +411,7 @@ $(document).ready(function () {
               $("#detailed").show();
 
               $("#code").text(re);
-              $("#tinput").text(reinput);
+              $('#tinput').text(reinput);
               $("#tans").text(reans);
 
               Swal.fire("您的結果", res.respone, "error");
@@ -400,7 +436,7 @@ $(document).ready(function () {
             $("#detailed").show();
 
             $("#code").text(re);
-            $("#tinput").text(reinput);
+             $("#tinput").text(reinput);
             $("#tans").text(reans);
             //document.querySelector("code").textContent = re;
 
@@ -408,16 +444,11 @@ $(document).ready(function () {
 
             makeTimerRequest();
           }
-        } else if (res.code == 5 && res.respone == "執行逾時") {
+        } else if (res.code == 5 && res.respone == "執行逾時或輸出值超過範圍") {
           re = res.msg;
 
-          $("#detailed").hide();
+           $("#detailed").hide();
 
-          Swal.fire("您的結果", res.msg, "error");
-          makeTimerRequest();
-        } else if (res.code == 6 && res.respone == "輸入值超出範圍") {
-          re = res.msg;
-          $("#detailed").hide();
           Swal.fire("您的結果", res.msg, "error");
           makeTimerRequest();
         } else {
@@ -617,16 +648,6 @@ $(document).ready(function () {
   /* 讀取檔案 */
 
   $("#upload").click(function () {
-    const fileInput = document.querySelector(
-      "#file-js-example input[type=file]"
-    );
-    fileInput.onchange = () => {
-      if (fileInput.files.length > 0) {
-        const fileName = document.querySelector("#file-js-example .file-name");
-        fileName.textContent = fileInput.files[0].name;
-      }
-    };
-
     var file = $("#file")[0].files[0];
     var reader = new FileReader();
     reader.onload = function (e) {
@@ -804,54 +825,58 @@ $(document).ready(function () {
     /* 取得value值 */
   });
 
-  //字體大小
-  $("#setfontsize").click(function () {
-    if (localStorage.getItem("fontsize") == "125%") {
-      $("body").css("font-size", "100%");
 
-      localStorage.setItem("fontsize", "100%");
-      console.log("100%");
-    } else {
-      //set body 125%
-      $("body").css("font-size", "125%");
 
-      localStorage.setItem("fontsize", "125%");
-      console.log("125%");
-    }
-  });
+
+connection.on("Send", function (message) {
+      console.log(message);
+      //set 
+      console.log("set");
+      editor.setCode(message);
+});
+
+
 
   //被控操模式
-  connection.on("CheckControl", function (message, uid) {
-    //console.log(message);
-    //console.log(uid);
+
+
+  connection.on("CheckControl", function (message,uid) {
+    console.log(message);
+    console.log(uid);
     if (message == 1) {
-      // Toast.fire({
-      //   icon: "info",
-      //   title: "被控操模式",
-      // });
       console.log("被控操模式");
-
-      //初始化延遲執行
-      setTimeout(function () {
-        var code = editor.getCode();
-        connection.invoke("Send", code);
-      }, 2000);
-
-      // 偵測事件
+      
+    // 偵測事件
       editor.addChangeListener(function () {
-        var qssid = $(".qssid").attr("name");
-        var cqssid = $("#qssid").attr("name");
-        var CourseId = $(".CourseId").attr("name");
+          var qssid = $(".qssid").attr("name");
+          var cqssid = $("#qssid").attr("name");
+          var CourseId = $(".CourseId").attr("name");
 
-        var code = editor.getCode();
-        //console.log(code);
+          var code = editor.getCode();
+          console.log(code);
+          
+          connection.invoke('Send', code);
 
-        connection.invoke("Send", code);
-      });
-    } else if (message == 0) {
-      //console.log("正常模式");
+
+    
+  });
+
+    }
+    else if (message == 0) {
+      console.log("正常模式");
+
     }
   });
+
+
+
+
+
+
+
+
+
+
 
   const Toast = Swal.mixin({
     toast: true,
@@ -863,4 +888,16 @@ $(document).ready(function () {
     icon: "success",
     timer: 1500,
   });
+
+
+ 
+
+
+
 });
+
+
+
+
+
+

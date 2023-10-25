@@ -388,7 +388,8 @@ BlockMirrorTextToBlocks.prototype.convertStatement = function (
       arrayMin(heights),
       arrayMax(heights)
     );
-    console.error(e);
+    //console.error(e);
+    console.error("找不到此積木");
     return BlockMirrorTextToBlocks.raw_block(extractedSource);
   }
 };
@@ -498,6 +499,39 @@ BlockMirrorTextToBlocks.create_block = function (
   return newBlock;
 };
 
+
+/* 
+
+
+BlockMirrorTextToBlocks 是一個類別，其中包含了一些方法用於將 Python 程式碼轉換成 Blockly XML 表示法。該類別定義了一些用於轉換不同 Python 程式碼類型的方法，例如：
+
+ast_Module：轉換 Python 模組
+ast_Interactive：轉換 Python 互動式表示法
+ast_Expression：轉換 Python 表示式
+ast_Suite：轉換 Python 程式碼
+ast_Pass：轉換 Python pass 語句
+此外，還定義了一個方法，用於將 Python 程式碼的字串表示法轉換為 Blockly XML。例如，在以下程式碼中：
+
+Copy code
+function BlockMirrorTextToBlocks(blockMirror) {
+  this.blockMirror = blockMirror;
+  this.hiddenImports = ["plt"];
+  this.strictAnnotations = ["int", "float", "str", "bool"];
+  Blockly.defineBlocksWithJsonArray(BlockMirrorTextToBlocks.BLOCKS);
+}
+
+BlockMirrorTextToBlocks.prototype.convertSourceToCodeBlock = function (
+  python_source
+) {
+  var xml = document.createElement("xml");
+  xml.appendChild(BlockMirrorTextToBlocks.raw_block(python_source));
+  return BlockMirrorTextToBlocks.xmlToString(xml);
+};
+可以看到，convertSourceToCodeBlock 方法會接受一個 Python 程式碼的字串，並將其轉換為 Blockly XML 表示法。
+
+
+*/
+
 BlockMirrorTextToBlocks.raw_block = function (txt) {
   // TODO: lineno as second parameter!
   return BlockMirrorTextToBlocks.create_block("ast_Raw", 0, { TEXT: txt });
@@ -521,6 +555,9 @@ BlockMirrorTextToBlocks.prototype["ast_Suite"] =
 BlockMirrorTextToBlocks.prototype["ast_Pass"] = function () {
   return null; //block("controls_pass");
 };
+
+
+
 
 BlockMirrorTextToBlocks.prototype.convertElements = function (
   key,

@@ -22,7 +22,7 @@ function BlockMirrorBlockEditor(blockMirror) {
   // Inject Blockly
   let blocklyOptions = {
     /* media: blockMirror.configuration.blocklyMediaPath, */
-    media: "./media/",
+      media: "/lib/blcokpy-new/media/",
     // We use special comment blocks
     zoom: { controls: true },
     comments: false,

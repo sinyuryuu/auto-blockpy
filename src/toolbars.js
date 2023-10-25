@@ -12,12 +12,8 @@ TOOLBOX_CATEGORY.VARIABLES = {
   custom: "VARIABLE",
 };
 
-/* https://developers.google.com/blockly/guides/configure/web/toolbox#json_10
-
-如何自訂圖片？
-
-*/
-
+/* https://developers.google.com/blockly/guides/configure/web/toolbox#json_10*/
+/*如何自訂圖片？*/
 
 TOOLBOX_CATEGORY.custom = {
   CSS: "fas fa-align-justify fa-2x fa-fw",
@@ -26,14 +22,31 @@ TOOLBOX_CATEGORY.custom = {
   custom: "VARIABLE",
 };
 
-
 TOOLBOX_CATEGORY.custominput = {
   CSS: "fas fa-arrow-alt-circle-right fa-2x fa-fw",
   name: "輸入/輸出",
   colour: "TEXT",
-  blocks: ["input(___)", "input()", "print(___)", '""'],
+  blocks: [
+    '""',
+    "input()",
+    "print()",
+    "print(___)",
+    "print(___,___)",
+    "print(___,___,___)",
+    "print(___,sep = '')",
+    "print(___,end = '')",
+    "''.format(___)",
+    "___.replace('', '')",
+    "___.split('')",
+    "___.strip()",
+    "''.join(___)",
+    "___.lstrip()",
+    "___.rstrip()",
+    "___.upper()",
+    "___.lower()",
+    "___.isdigit()",
+  ],
 };
-
 
 TOOLBOX_CATEGORY.customtype = {
   CSS: "fa fa-code fa-2x fa-fw",
@@ -42,13 +55,13 @@ TOOLBOX_CATEGORY.customtype = {
   blocks: ["eval(___)", "int(___)", "str(___)", "float(___)"],
 };
 
-
 TOOLBOX_CATEGORY.custommath = {
   CSS: "fas fa-plus-circle fa-2x fa-fw",
   name: "數學",
   colour: "MATH",
   blocks: [
-    '0',
+    "0",
+    "-___",
     "___ + ___",
     "___-___",
     "___ * ___",
@@ -56,10 +69,10 @@ TOOLBOX_CATEGORY.custommath = {
     "___ % ___",
     "___ ** ___",
     "___ // ___",
-    
+    "abs(___)",
+    "round(___)",
   ],
 };
-
 
 TOOLBOX_CATEGORY.customiteration = {
   CSS: "fas fa-undo fa-2x fa-fw",
@@ -77,43 +90,79 @@ TOOLBOX_CATEGORY.customiteration = {
   ],
 };
 
+TOOLBOX_CATEGORY.custommlist = {
+  CSS: "fas fa-list-ol fa-2x fa-fw",
+  name: "串列",
+  colour: "LIST",
+  blocks: ["[]","list(___)","len(___)","*___","___[___]","___[___:___]","___[___:]","___[:___]","___[::___]", "___.append(___)", "___.clear()", "___.copy()", "___.count(___)", "___.extend(___)", "___.index(___)", "___.insert(___, ___)", "___.pop(___)", "___.remove(___)", "___.reverse()", "___.sort(reverse=False)"],
+
+
+}
+
+//元祖
+TOOLBOX_CATEGORY.custommtuple = {
+  CSS: "fas fa-list-ul fa-2x fa-fw",
+  name: "元組",
+  colour: "LIST",
+  blocks: ["()","tuple(___)"],
+}
+
+//集合
+TOOLBOX_CATEGORY.custommset = {
+  CSS: "fas fa-object-group fa-2x fa-fw",
+  name: "集合",
+  colour: "LIST",
+  blocks: ["set(___)","___.add(___)", "___.clear()", "___.copy()", "___.difference(___)", "___.difference_update(___)", "___.discard(___)", "___.intersection(___)", "___.intersection_update(___)", "___.isdisjoint(___)", "___.issubset(___)", "___.issuperset(___)", "___.pop()", "___.remove(___)", "___.symmetric_difference(___)", "___.symmetric_difference_update(___)", "___.union(___)", "___.update(___)", "len(___)"],
+}
+
+//字典
+TOOLBOX_CATEGORY.custommdict = {
+  CSS: "fas fa-list-alt fa-2x fa-fw",
+  name: "字典",
+  colour: "DICTIONARY",
+  blocks: ["{}","dict(___)","___.clear()", "___.copy()", "___.fromkeys(___)", "___.get(___)", "___.items()", "___.keys()", "___.pop(___)", "___.popitem()", "___.setdefault(___)", "___.update(___)", "___.values()", "len(___)"],
+}
+
+
+
+
 
 
 /* 工具列自訂圖示 */
 
-(TOOLBOX_CATEGORY.TEST = {
-  CSS: "las la-exclamation-circle la-3x green",
-  name: "判斷",
+// (TOOLBOX_CATEGORY.TEST = {
+//     CSS: "las la-exclamation-circle la-3x green",
+//     name: "判斷",
+//     colour: "LOGIC",
+//     blocks: [
+//         "if ___: pass",
+//         "if ___:pass\nelif ___:pass",
+//         "if ___: pass\nelse: pass",
+//         "if ___: pass\nelif ___:pass\nelse: pass",
+//         "___ == ___",
+//         "___ != ___",
+//         "___ > ___",
+//         "___ < ___",
+
+//     ],
+// }),
+// console.log(TOOLBOX_CATEGORY.TEST);
+
+TOOLBOX_CATEGORY.DECISIONS = {
+  name: "Decisions",
   colour: "LOGIC",
   blocks: [
     "if ___: pass",
-    "if ___:pass\nelif ___:pass",
     "if ___: pass\nelse: pass",
-    "if ___: pass\nelif ___:pass\nelse: pass",
-    "___ == ___",
-    "___ != ___",
-    "___ > ___",
     "___ < ___",
-
+    "___ and ___",
+    "elif__:\n    pass",
+    "else__:\n    pass",
+    "___ and ___",
+    "break",
+    "not ___",
   ],
-}),
-  // console.log(TOOLBOX_CATEGORY.TEST);
-
-  (TOOLBOX_CATEGORY.DECISIONS = {
-    name: "Decisions",
-    colour: "LOGIC",
-    blocks: [
-      "if ___: pass",
-      "if ___: pass\nelse: pass",
-      "___ < ___",
-      "___ and ___",
-      "elif__:\n    pass",
-      "else__:\n    pass",
-      "___ and ___",
-      "break",
-      "not ___",
-    ],
-  });
+};
 
 TOOLBOX_CATEGORY.CALCULATIONS = {
   name: "Calculation",
@@ -197,23 +246,43 @@ BlockMirrorBlockEditor.prototype.TOOLBOXES = {
     //https://developers.google.com/blockly/guides/create-custom-blocks/xml-custom-blocks
     //colour="#A3321A" css-label="customLabel"  顏色、粗體
 
-    '<toolboxlabel name="自訂工具箱" colour="#A3321A" css-label="customLabel"></toolboxlabel>',
+    '<toolboxlabel name="工具箱" colour="#A3321A" css-label="customLabel"></toolboxlabel>',
     TOOLBOX_CATEGORY.SEP,
     TOOLBOX_CATEGORY.custom,
-    TOOLBOX_CATEGORY.custominput,
     TOOLBOX_CATEGORY.customtype,
+    TOOLBOX_CATEGORY.custominput,
     TOOLBOX_CATEGORY.custommath,
     TOOLBOX_CATEGORY.customiteration,
-    TOOLBOX_CATEGORY.TEST,
-
-    '<category css-icon="fa fa-code fa-2x fa-fw" name="Logic" categorystyle="logic_category">',
+    //TOOLBOX_CATEGORY.TEST,
+    '<category css-icon="las la-exclamation-circle la-3x green" name="判斷" categorystyle="logic_category">',
     '<block type="controls_if"></block>', //原生的if
-    '<block type="controls_whileUntil"></block>',
-    '<block type="ast_If"></block>', //單獨使用blpckpy的if
+    //'<block type="controls_whileUntil"></block>',
+    // '<block type="ast_If"></block>', //單獨使用blpckpy的if
     '<block type="ast_Compare">',
     '<field name="OP">Eq</field>',
-    '</block>',
+    "</block>",
+    '<block type="ast_Compare">',
+    '<field name="OP">NotEq</field>',
+    "</block>",
+    '<block type="ast_Compare">',
+    '<field name="OP">Gt</field>',
+    "</block>",
+    '<block type="ast_Compare">',
+    '<field name="OP">Lt</field>',
+    "</block>",
+    '<block type="ast_BoolOp">',
+    '<field name="OP">And</field>',
+    "</block>",
+    '<block type="ast_BoolOp">',
+    '<field name="OP">Or</field>',
+    "</block>",
     "</category>",
+    TOOLBOX_CATEGORY.custommlist,
+    TOOLBOX_CATEGORY.custommdict,
+    TOOLBOX_CATEGORY.custommtuple,
+    TOOLBOX_CATEGORY.custommset,
+    
+
   ],
   //******************************************************
   normal: [
